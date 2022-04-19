@@ -20,5 +20,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('index', include('home.urls')),
-
+    path('registration', include('home.urls')),
+    path('search', include('home.urls')),
+    path('productView', include('home.urls')),
+    path('cart', include('home.urls')),
+    path('checkout', include('home.urls')),
+    path('orderConfirm', include('home.urls')),
 ]
