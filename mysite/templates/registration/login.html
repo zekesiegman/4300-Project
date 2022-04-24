@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration</title>
 </head>
 <body>
-  <h1>Login Here</h1>
+    {%block content %}
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Login</span>
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                 <div class="input-field">
+                     {{ form.username }}
+                 </div>
+                <div class="input-field">
+                    {{ form.password }}
+                </div>
+                <div class="input-field button">
+                    <button type="submit" class = "btn btn-success">Login</button>
+                </div>
+                </form>
+                <div class="login-signup">
+                    <span class="text">Don't have an account?
+                        <a href="{% url 'registration' %}">Create one here</a>
+                    </span><br>
+                    <span class="text">Forgot password?
+                        <a href="{% url 'forgotpassword' %}">Reset here</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
 </body>
 </html>

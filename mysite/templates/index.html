@@ -6,5 +6,16 @@
 </head>
 <body>
     <h1>This is the home page!</h1>
+    {% block header %}
+    {% if user.is_authenticated %}
+    <p class="mb-0">Hi {{ user.username }}!</p>
+    {% endif %}
+    {% if not user.is_authenticated %}
+    <a href="{% url 'login' %}">
+    <p>Signup/Login</p>
+    {% endif %}
+    <a href="{% url 'logout' %}">
+    <p class="mb-0">Logout</p>
+    {% endblock %}
 </body>
 </html>
