@@ -14,7 +14,7 @@ INSTALLING PROJECT
  
  RUNNING PROJECT 
  - on first set up: 
-    - open terminal on bottom toolbar
+    - open terminal on bottom toolbar and type:
     - 1: python manage.py makemigrations 
     - 2: python manage.py migrate
     - 3: python manage.py runserver and click on localhost link 
