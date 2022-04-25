@@ -14,10 +14,11 @@ INSTALLING PROJECT
  
  RUNNING PROJECT 
  - on first set up: 
-    - open terminal on bottom toolbar and type:
+    - open terminal on bottom toolbar
     - 1: python manage.py makemigrations 
     - 2: python manage.py migrate
-    - 3: python manage.py runserver and click on localhost link 
+    - 3: python manage.py runserver
+    - 4: click on localhost link 
  - for running later, only do runserver command (3) 
  - if you make changes to the models page, you need to run 1 and 2 before 3 otherwise changes will not be saved
  - if you want to access the admin page, run the server and add /admin to the url 
