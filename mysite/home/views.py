@@ -3,13 +3,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth import login, authenticate
 from django.conf import settings
+from .models import Profile
+from .models import Item
+from .models import Cart
 from .forms import RegisterForm
 
 # Create your views here.
 
 
 def index(request):
-    context = {}
+    phones = Item.objects.all()
+    context = {'phones': phones}
     return render(request, '../templates/index.html', context)
 
 
