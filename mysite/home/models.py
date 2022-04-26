@@ -15,6 +15,7 @@ class Profile(models.Model):
 class Item(models.Model):
     itemId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
+    url = models.URLField()
     price = models.IntegerField()
     storage = models.IntegerField()
     ram = models.IntegerField()
