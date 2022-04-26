@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth import login, authenticate
 from django.conf import settings
+from .forms import RegisterForm
 
 # Create your views here.
 
@@ -13,8 +14,13 @@ def index(request):
 
 
 def registration(request):
-    context = {}
-    return render(request, '../templates/registration.html', context)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    form = RegisterForm()
+    return render(request, '../templates/registration.html', {'form': form})
 
 
 def logoutpage(request):
@@ -28,7 +34,7 @@ def forgotpassword(request):
         user = User.objects.get(username=username)
         user.set_password(newpassword)
         user.save()
-        return redirect('/')
+        return redirect('login')
     except User.DoesNotExist:
         user = None
     return render(request, "../templates/forgotpassword.html")
