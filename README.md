@@ -10,7 +10,7 @@ INSTALLING PROJECT
 - go to toolbar on the bottom and click python packages
     - install Django 
     - install django-crispy-forms
-    - install django-bootstrap4
+    - install django-bootstrap-v5
  
  RUNNING PROJECT 
  - on first set up: 
