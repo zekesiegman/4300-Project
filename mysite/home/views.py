@@ -49,9 +49,13 @@ def search(request):
     return render(request, '../templates/search.html', context)
 
 
-def productView(request):
-    context = {}
-    return render(request, '../templates/productView.html', context)
+def productView(request, id):
+    try:
+        phone = Item.objects.get(itemId=id)
+        context = {"phone" : phone}
+        return render(request, '../templates/productView.html', context)
+    except Item.DoesNotExist:
+        return render(request, '../templates/index.html', context)
 
 
 def cart(request):

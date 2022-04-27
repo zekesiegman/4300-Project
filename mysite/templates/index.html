@@ -46,7 +46,7 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompage template</p>
                 </div>
             </div>
         </header>
@@ -59,7 +59,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ item.url }}" alt="{{ item.name }}" width="450" height="300"/>
+                            <img class = "card-img-top" src="{{ item.url }}" alt="{{ item.name }}" style="height: 300px; width: auto"/>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -71,7 +71,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View Product</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'productView' item.itemId %}">View Product</a></div>
                             </div>
                         </div>
                     </div>
