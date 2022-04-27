@@ -60,7 +60,10 @@ def productView(request, id):
 
 def cart(request):
     context = {}
-    return render(request, '../templates/cart.html', context)
+    if request.user.is_authenticated:
+        return render(request, '../templates/cart.html', context)
+    else:
+        return redirect("login")
 
 
 def checkout(request):
