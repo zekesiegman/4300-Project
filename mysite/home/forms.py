@@ -5,18 +5,17 @@ from django.contrib.auth import login, authenticate
 
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField()
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    password1 = forms.CharField()
+    email = forms.EmailField(required=True)
+    #first_name = forms.CharField()
+    #last_name = forms.CharField()
 
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-        User = super().save(commit=False)
-        User.email = self.cleaned_data['email']
+        user = super(RegisterForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
         if commit:
-            User.save()
-        return User
+            user.save()
+        return user

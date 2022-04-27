@@ -10,7 +10,6 @@ from .forms import RegisterForm
 
 # Create your views here.
 
-
 def index(request):
     phones = Item.objects.all()
     context = {'phones': phones}
@@ -21,7 +20,8 @@ def registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('/')
     form = RegisterForm()
     return render(request, '../templates/registration.html', {'form': form})
