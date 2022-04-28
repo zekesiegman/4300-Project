@@ -11,6 +11,9 @@ class Profile(models.Model):
     expiration = models.DateField(default=django.utils.timezone.now)
     billingAddress = models.CharField(max_length=250, default='')
 
+    def __str__(self) :
+        return self.user.name
+
 
 class Item(models.Model):
     itemId = models.AutoField(primary_key=True)
@@ -21,8 +24,14 @@ class Item(models.Model):
     ram = models.IntegerField()
     camera_res = models.IntegerField()
     size = models.CharField(max_length=250)
+    
+    def __str__(self):
+        return self.name
 
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     item = models.ForeignKey('Item', on_delete=models.CASCADE, default=1)
+    
+    def __str__(self):
+        return self.user.name
