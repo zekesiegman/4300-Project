@@ -9,6 +9,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, default=1)
     cardNumber = models.CharField(max_length=500, default='')
     expiration = models.DateField(default=django.utils.timezone.now)
+    ccv = models.IntegerField(default=0)
     billingAddress = models.CharField(max_length=250, default='')
 
     def __str__(self) :
