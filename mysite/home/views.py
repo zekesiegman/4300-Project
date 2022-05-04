@@ -30,6 +30,7 @@ def registration(request):
 def logoutpage(request):
     return render(request, '../templates/index.html')
 
+
 def forgotpassword(request):
     username = request.POST.get('username')
     newpassword = request.POST.get('newpassword')
@@ -59,7 +60,7 @@ def search(request):
 def productView(request, id):
     try:
         phone = Item.objects.get(itemId=id)
-        context = {"phone" : phone}
+        context = {"phone": phone}
         return render(request, '../templates/productView.html', context)
     except Item.DoesNotExist:
         return render(request, '../templates/index.html', context)
