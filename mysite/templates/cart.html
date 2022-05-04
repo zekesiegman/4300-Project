@@ -52,12 +52,13 @@
             <h1>Cart Page</h1>
         </div>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="card-group">
             <!-- Phone Item -->
             {% for cart in matches %}
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
-                    <img class="card-img-top" src="{{ cart.item.url }}" alt="{{ cart.item.name }}"
+                    <img class="card-img-left" src="{{ cart.item.url }}" alt="{{ cart.item.name }}"
                         style="height: 300px; width: auto; object-fit: contain;" />
                     <!-- Product details-->
                     <div class="card-body p-4">
@@ -76,6 +77,7 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
         </div>
     </section>
 </body>
