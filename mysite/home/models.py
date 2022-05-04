@@ -30,10 +30,10 @@ class Item(models.Model):
 
 
 class Cart(models.Model):
-    cartItemId = models.AutoField(primary_key=True)
+    cartItemId = models.AutoField(primary_key=True, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     item = models.ForeignKey('Item', on_delete=models.CASCADE, default=1)
-    copies = models.PositiveIntegerField()
+    copies = models.PositiveIntegerField(default=1)
     
     def __str__(self):
         return self.cartItemId + ' ' + self.user.name
