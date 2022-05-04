@@ -40,7 +40,6 @@
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                     </button>
                 </form>
             </div>
@@ -68,11 +67,16 @@
                                 <p class="card-text"> Size: {{ cart.item.size }}</p>
                             </div>
                         </div>
-                        <form method="post" class="col" style="display: flex; justify-content: baseline; align-items: center;">
-                            {% csrf_token %}
-                            <button type="submit" class = "btn btn-danger"><i class="bi bi-x-lg" style="padding-right: 6px; margin-left: -2px"></i>Remove</button>
-                            <input type="hidden" name="item" value="{{cart.item.itemId}}">
-                        </form>
+                        <div class="col" style="display: flex; flex-direction: column; gap: 10px; flex-basis: 0; justify-content: center; align-items: center;">
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class = "btn btn-danger" style="width: 120px"><i class="bi bi-x-lg" style="padding-right: 15px; margin-left: -2px"></i>Remove</button>
+                                <input type="hidden" name="item" value="{{cart.item.itemId}}">
+                            </form>
+                            <form action="{% url 'productView' cart.item.itemId %}">
+                                <button type="submit" class="btn btn-outline-dark" style="width: 120px">View Product</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
