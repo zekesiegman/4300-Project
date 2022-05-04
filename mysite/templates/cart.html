@@ -49,7 +49,7 @@
 
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
-            <h1>Cart Page</h1><br>
+            <h1>Shopping Cart</h1><br>
         
             <div class="container">
                 <!-- Phone Item -->
@@ -76,7 +76,16 @@
                     </div>
                 </div>
                 {% endfor %}
-            </div>
+            </div><br>
+            {% if matches.count != 0 %}
+                <a href="{% url 'checkout' %}" style="text-decoration: none;">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btn btn-outline-dark flex-shrink-0">
+                            Proceed to checkout
+                        </button>
+                    </div>
+                </a>
+            {% endif %}
         </div>
     </section>
 </body>
