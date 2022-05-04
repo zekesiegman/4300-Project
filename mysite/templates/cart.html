@@ -49,42 +49,33 @@
 
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
-            <h1>Cart Page</h1>
-        </div>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="card-group">
-            <!-- Phone Item -->
-            {% for cart in matches %}
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-left" src="{{ cart.item.url }}" alt="{{ cart.item.name }}"
-                        style="height: 300px; width: auto; object-fit: contain;" />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{ cart.item.name }}</h5>
-                            <!-- Product price-->
-                            ${{cart.item.price}}
+            <h1>Cart Page</h1><br>
+        
+            <div class="container">
+                <!-- Phone Item -->
+                {% for cart in matches %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-2" style="display: flex; padding: 10px; justify-content: center;">
+                            <img src="{{ cart.item.url }}" alt="{{ cart.item.name }}" class="rounded-start" style="height: 200px; width: auto; object-fit: contain;" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ cart.item.name }}</h5>
+                                <p class="card-text"> $ {{ cart.item.price }}</p>
+                                <p class="card-text"> Storage: {{ cart.item.storage }} Gb</p>
+                                <p class="card-text"> Ram: {{ cart.item.ram }} Gb</p>
+                                <p class="card-text"> Size: {{ cart.item.storage }}</p>
+                            </div>
+                        </div>
+                        <div class="col" style="display: flex; justify-content: baseline; align-items: center;">
+                            <button type="submit" class = "btn btn-danger"><i class="bi bi-x-lg" style="padding-right: 6px; margin-left: -2px"></i>Remove</button>
                         </div>
                     </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                href="{% url 'productView' cart.item.itemId %}">View Product</a></div>
-                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
         </div>
     </section>
 </body>
-<footer class="py-5 bg-dark" style="position: absolute; bottom: 0; width: 100%;">
-    <div class="container">
-        <p class="m-0 text-center text-white">Not Copyright &copy; Your Website 2022</p>
-    </div>
-</footer>
-
 </html>
