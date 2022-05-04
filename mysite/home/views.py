@@ -61,6 +61,14 @@ def productView(request, id):
     try:
         phone = Item.objects.get(itemId=id)
         context = {"phone": phone}
+
+        if request.method == "POST":
+            if request.user.is_authenticated:
+                cartItem = Cart.objects.create(user=request.user, item=phone, copies=1)
+                return redirect("cart")
+            else:
+                return redirect("login")
+
         return render(request, '../templates/productView.html', context)
     except Item.DoesNotExist:
         return render(request, '../templates/index.html', context)
@@ -68,8 +76,17 @@ def productView(request, id):
 
 def cart(request):
     if request.user.is_authenticated:
-        cartItemsList = Cart.objects.filter(user=request.user)
+        cartItemsList = Cart.objects.filter(user=request.user).order_by('item_id')
         context = {'matches': cartItemsList}
+
+        if request.method == "POST":
+            removeItem = request.POST.get('item')
+            removing = Cart.objects.filter(user=request.user, item=Item.objects.get(itemId=removeItem))
+            
+            removing[0].delete()
+
+            return redirect('cart')
+
         return render(request, '../templates/cart.html', context)
     else:
         return redirect("login")

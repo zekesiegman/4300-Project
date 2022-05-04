@@ -68,9 +68,11 @@
                                 <p class="card-text"> Size: {{ cart.item.size }}</p>
                             </div>
                         </div>
-                        <div class="col" style="display: flex; justify-content: baseline; align-items: center;">
+                        <form method="post" class="col" style="display: flex; justify-content: baseline; align-items: center;">
+                            {% csrf_token %}
                             <button type="submit" class = "btn btn-danger"><i class="bi bi-x-lg" style="padding-right: 6px; margin-left: -2px"></i>Remove</button>
-                        </div>
+                            <input type="hidden" name="item" value="{{cart.item.itemId}}">
+                        </form>
                     </div>
                 </div>
                 {% endfor %}

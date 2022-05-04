@@ -58,7 +58,8 @@
                             Camera Resolution: {{ phone.camera_res }} MPixel<br>
                             Size: {{ phone.size }}<br>
                         </p>
-                        <form class="d-flex" action="{% url 'cart' %}">
+                        <form class="d-flex" method="post">
+                            {% csrf_token %}
                             <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
                             <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
