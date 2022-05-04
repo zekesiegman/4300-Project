@@ -46,6 +46,13 @@ def forgotpassword(request):
 
 def search(request):
     context = {}
+    if request.method == 'POST':
+        searchStr = request.POST.get('search')
+        nameMatches = Item.objects.filter(name__icontains=searchStr)
+        # can add more search queries and add them to matches with a |
+        matches = nameMatches
+        context = {'matches': matches}
+        return render(request, '../templates/search.html', context)
     return render(request, '../templates/search.html', context)
 
 
