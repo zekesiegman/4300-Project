@@ -50,6 +50,11 @@
                         <form method="post" class="form-group">
                             {% csrf_token %}
                             {% bootstrap_form form %}
+                            {% if error %}
+                                <div class="alert alert-danger" role="alert">
+                                    Please make sure all fields are filled out correctly!
+                                </div>
+                            {% endif %}
                             <div class="input-field button">
                                 <button type="submit" class = "btn btn-success">Submit</button>
                             </div>
