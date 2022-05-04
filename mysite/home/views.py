@@ -7,6 +7,7 @@ from .models import Profile
 from .models import Item
 from .models import Cart
 from .forms import RegisterForm
+from .forms import CheckoutForm
 
 # Create your views here.
 
@@ -99,7 +100,18 @@ def cart(request):
 def checkout(request):
     if request.user.is_authenticated:
         cartItemsList = Cart.objects.filter(user=request.user)
-        context = {'matches': cartItemsList}
+        form = CheckoutForm()
+        context = {'matches': cartItemsList, 'form': form}
+        if request.method == 'POST':
+            form = CheckoutForm(request.POST)
+            if form.is_valid():
+                profile = form.save()
+                profile.save()
+                return redirect('orderconfirm')
+            else:
+                form = CheckoutForm()
+                error = True
+                return render(request, '../templates/checkout.html', {'form': form, 'error': error})
         return render(request, '../templates/checkout.html', context)
     else:
         return redirect("login")
@@ -107,8 +119,9 @@ def checkout(request):
 
 def orderConfirm(request):
     if request.user.is_authenticated:
-        cartItemsList = Cart.objects.filter(user=request.user)
-        context = {'matches': cartItemsList}
-        return render(request, '../templates/orderConfirmation.html', context)
+        if request.method == 'POST':
+            cartItemsList = Cart.objects.filter(user=request.user)
+            context = {'matches': cartItemsList}
+            return render(request, '../templates/orderConfirmation.html', context)
     else:
         return redirect("login")

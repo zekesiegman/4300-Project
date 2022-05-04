@@ -30,7 +30,7 @@ class RegisterForm(UserCreationForm):
         return user
 
 
-class checkoutForm(forms.Form):
+class CheckoutForm(forms.Form):
     ccnum = forms.IntegerField
     exp = forms.DateField
     ccv = forms.IntegerField
@@ -43,7 +43,17 @@ class checkoutForm(forms.Form):
         model = Profile
         fields = ('ccnum', 'exp', 'ccv', 'address', 'state', 'zip')
 
-    #def save(self, commit=True):
-
+    def save(self, commit=True):
+        data = self.cleaned_data()
+        profile = Profile()
+        # find a way to access current user and set profile.user
+        profile.cardNumber = data['ccnum']
+        profile.expiration = data['exp']
+        profile.ccv = data['ccv']
+        profile.billingAddress = data['address'] + ', ' + data['city'] + ' ' + str(data['state']) + \
+                                 ', ' + str(data['zip'])
+        if commit:
+            profile.save()
+        return profile
 
 
