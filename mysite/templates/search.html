@@ -50,7 +50,15 @@
             <div class="container">
                 <div class="row height d-flex justify-content-center align-items-center">
                     <div class="col-md-8">
-                        <div class="search"> <i class="fa fa-search"></i> <input type="text" class="form-control" placeholder="Search our Products"> <button class="btn btn-primary">Search</button> </div>
+                        <div class="search"> <i class="fa fa-search"></i>
+                            {% block search %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="text" class="form-control" placeholder="Search our Products" name="search">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
+                            {% endblock %}
+                        </div>
                     </div>
                 </div>
             </div>
