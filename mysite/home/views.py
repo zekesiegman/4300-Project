@@ -48,7 +48,9 @@ def search(request):
     context = {}
     if request.method == 'POST':
         searchStr = request.POST.get('search')
-        matches = Item.objects.filter(name__icontains=searchStr)
+        nameMatches = Item.objects.filter(name__icontains=searchStr)
+        priceMatches = Item.objects.filter(price=searchStr)
+        matches = nameMatches | priceMatches
         context = {'matches': matches}
         return render(request, '../templates/search.html', context)
     return render(request, '../templates/search.html', context)
