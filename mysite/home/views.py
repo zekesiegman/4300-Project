@@ -76,10 +76,18 @@ def cart(request):
 
 
 def checkout(request):
-    context = {}
-    return render(request, '../templates/checkout.html', context)
+    if request.user.is_authenticated:
+        cartItemsList = Cart.objects.filter(user=request.user)
+        context = {'matches': cartItemsList}
+        return render(request, '../templates/checkout.html', context)
+    else:
+        return redirect("login")
 
 
 def orderConfirm(request):
-    context = {}
-    return render(request, '../templates/orderConfirmation.html', context)
+    if request.user.is_authenticated:
+        cartItemsList = Cart.objects.filter(user=request.user)
+        context = {'matches': cartItemsList}
+        return render(request, '../templates/orderConfirmation.html', context)
+    else:
+        return redirect("login")

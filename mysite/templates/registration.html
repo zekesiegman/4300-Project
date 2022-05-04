@@ -50,23 +50,7 @@
                     <div class="form login">
                         <form method="post" class="form-group">
                             {% csrf_token %}
-                            <div class="input-field">
-                                <p>Username:</p>
-                                {{ form.username }}
-                            </div><br>
-                            <div class="input-field">
-                                <p>Email:</p>
-                                {{ form.email }}
-                            </div>
-                            <div class="input-field">
-                                <p>Password:</p>
-                                <p>Password must be 8 characters long and contain one capital, one number, and one special character.</p>
-                                {{ form.password1 }}
-                            </div>
-                            <div class="input-field">
-                                <p>Confirm Password:</p>
-                                {{ form.password2 }}
-                            </div><br>
+                            {% bootstrap_form form %}
                             <div class="input-field button">
                                 <button type="submit" class = "btn btn-success">Submit</button>
                             </div>
