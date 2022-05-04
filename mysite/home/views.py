@@ -23,6 +23,10 @@ def registration(request):
             user = form.save()
             login(request, user)
             return redirect('/')
+        else:
+            form = RegisterForm()
+            error = True
+            return render(request, '../templates/registration.html', {'form': form, 'error': error})
     form = RegisterForm()
     return render(request, '../templates/registration.html', {'form': form})
 
