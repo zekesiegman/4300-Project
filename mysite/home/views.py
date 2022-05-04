@@ -67,8 +67,9 @@ def productView(request, id):
 
 
 def cart(request):
-    context = {}
     if request.user.is_authenticated:
+        cartItemsList = Cart.objects.filter(user=request.user)
+        context = {'matches': cartItemsList}
         return render(request, '../templates/cart.html', context)
     else:
         return redirect("login")
