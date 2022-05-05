@@ -49,7 +49,8 @@ def forgotpassword(request):
         user.save()
         return redirect('login')
     except User.DoesNotExist:
-        user = None
+        error = True
+        return render(request, "../templates/forgotpassword.html", {'error': error})
     return render(request, "../templates/forgotpassword.html")
 
 
