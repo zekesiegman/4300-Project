@@ -8,8 +8,11 @@ from .models import Item
 from .models import Cart
 from .forms import RegisterForm
 from .forms import CheckoutForm
+from django.conf import settings
+from cryptography.fernet import Fernet
 
 # Create your views here.
+
 
 def index(request):
     phones = Item.objects.all()
@@ -97,6 +100,14 @@ def cart(request):
         return redirect("login")
 
 
+def encrypt(cardNum):
+    key = settings.ENCRYPT_KEY
+    fernet = Fernet(key)
+    cardEncoded =cardNum.encode()
+    cardNoEncr = fernet.encrypt(cardEncoded).decode()
+    return cardNoEncr
+
+
 def checkout(request):
     if request.user.is_authenticated:
         user = request.user
@@ -111,8 +122,9 @@ def checkout(request):
             state = request.POST.get('state')
             zip = request.POST.get('zip')
             if ccnum is not None and exp is not None and ccv is not None and len(address) != 0 and len(city) != 0 and len(state) != 0 and zip is not None:
+                cardEncrpyted = encrypt(ccnum)
                 fullAddress = address + ', ' + city + ' ' + state + ', ' + zip
-                profile = Profile(user=user, cardNumber=int(ccnum), expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
+                profile = Profile(user=user, cardNumber=int(cardEncrpyted), expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
                 profile.save()
                 cart = Cart.objects.get(user=request.user)
                 cart.delete()
