@@ -114,6 +114,8 @@ def checkout(request):
                 fullAddress = address + ', ' + city + ' ' + state + ', ' + zip
                 profile = Profile(user=user, cardNumber=int(ccnum), expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
                 profile.save()
+                cart = Cart.objects.get(user=request.user)
+                cart.delete()
                 return redirect('orderConfirm')
             else:
                 cartItemsList = Cart.objects.filter(user=user)
