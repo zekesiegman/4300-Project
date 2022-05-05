@@ -39,7 +39,7 @@ class CheckoutForm(forms.Form):
     city = forms.CharField()
     state = forms.CharField()
     zip = forms.IntegerField()
-    user = forms.CharField(widget=forms.HiddenInput(), required=False)
+    user = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Profile
@@ -48,7 +48,7 @@ class CheckoutForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super(CheckoutForm, self).__init__(*args, **kwargs)
         print(user)
-        self.fields['user'].queryset = user
+        self.fields['user'] = user
 
     def save(self, commit=True):
         data = self.cleaned_data()

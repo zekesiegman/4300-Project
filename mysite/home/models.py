@@ -12,9 +12,6 @@ class Profile(models.Model):
     ccv = models.IntegerField(default=0)
     billingAddress = models.CharField(max_length=250, default='')
 
-    def __str__(self) :
-        return self.user.name
-
 
 class Item(models.Model):
     itemId = models.AutoField(primary_key=True)

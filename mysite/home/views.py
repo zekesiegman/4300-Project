@@ -101,18 +101,25 @@ def checkout(request):
     if request.user.is_authenticated:
         user = request.user
         cartItemsList = Cart.objects.filter(user=user)
-        form = CheckoutForm(user)
-        context = {'matches': cartItemsList, 'form': form}
+        context = {'matches': cartItemsList,}
         if request.method == 'POST':
-            form = CheckoutForm(request.POST, user)
-            if form.is_valid():
-                profile = form.save()
+            ccnum = request.POST.get('ccnum')
+            exp = request.POST.get('exp')
+            ccv = request.POST.get('ccv')
+            address = request.POST.get('address')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+            zip = request.POST.get('zip')
+            if ccnum is not None and exp is not None and ccv is not None and len(address) != 0 and len(city) != 0 and len(state) != 0 and zip is not None:
+                fullAddress = address + ', ' + city + ' ' + state + ', ' + zip
+                profile = Profile(user=user, cardNumber=int(ccnum), expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
                 profile.save()
-                return redirect('orderconfirm')
+                return redirect('orderConfirm')
             else:
-                form = CheckoutForm(user)
+                cartItemsList = Cart.objects.filter(user=user)
                 error = True
-                return render(request, '../templates/checkout.html', {'form': form, 'error': error})
+                context = {'matches': cartItemsList, 'error': error}
+                return render(request, '../templates/checkout.html', context)
         return render(request, '../templates/checkout.html', context)
     else:
         return redirect("login")
