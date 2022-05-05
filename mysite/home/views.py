@@ -40,17 +40,18 @@ def logoutpage(request):
 
 
 def forgotpassword(request):
-    username = request.POST.get('username')
-    newpassword = request.POST.get('newpassword')
-    # try to find user with matching email and change password
-    try:
-        user = User.objects.get(username=username)
-        user.set_password(newpassword)
-        user.save()
-        return redirect('login')
-    except User.DoesNotExist:
-        error = True
-        return render(request, "../templates/forgotpassword.html", {'error': error})
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        newpassword = request.POST.get('newpassword')
+        # try to find user with matching email and change password
+        try:
+            user = User.objects.get(username=username)
+            user.set_password(newpassword)
+            user.save()
+            return redirect('login')
+        except User.DoesNotExist:
+            error = True
+            return render(request, "../templates/forgotpassword.html", {'error': error})
     return render(request, "../templates/forgotpassword.html")
 
 
@@ -125,7 +126,7 @@ def checkout(request):
             if ccnum is not None and exp is not None and ccv is not None and len(address) != 0 and len(city) != 0 and len(state) != 0 and zip is not None:
                 cardEncrpyted = encrypt(ccnum)
                 fullAddress = address + ', ' + city + ' ' + state + ', ' + zip
-                profile = Profile(user=user, cardNumber=int(cardEncrpyted), expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
+                profile = Profile(user=user, cardNumber=cardEncrpyted, expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
                 profile.save()
                 cart = Cart.objects.get(user=request.user)
                 cart.delete()
