@@ -99,17 +99,18 @@ def cart(request):
 
 def checkout(request):
     if request.user.is_authenticated:
-        cartItemsList = Cart.objects.filter(user=request.user)
-        form = CheckoutForm()
+        user = request.user
+        cartItemsList = Cart.objects.filter(user=user)
+        form = CheckoutForm(user)
         context = {'matches': cartItemsList, 'form': form}
         if request.method == 'POST':
-            form = CheckoutForm(request.POST)
+            form = CheckoutForm(request.POST, user)
             if form.is_valid():
                 profile = form.save()
                 profile.save()
                 return redirect('orderconfirm')
             else:
-                form = CheckoutForm()
+                form = CheckoutForm(user)
                 error = True
                 return render(request, '../templates/checkout.html', {'form': form, 'error': error})
         return render(request, '../templates/checkout.html', context)

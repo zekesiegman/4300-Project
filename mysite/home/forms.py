@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 from django.contrib.auth import login, authenticate
+from datetime import date
 
 stateChoices = ('Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California','Colorado',
                 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia',
@@ -31,22 +32,28 @@ class RegisterForm(UserCreationForm):
 
 
 class CheckoutForm(forms.Form):
-    ccnum = forms.IntegerField
-    exp = forms.DateField
-    ccv = forms.IntegerField
-    address = forms.CharField
-    city = forms.CharField
-    state = forms.ChoiceField(choices=stateChoices)
-    zip = forms.IntegerField
+    ccnum = forms.IntegerField()
+    exp = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    ccv = forms.IntegerField()
+    address = forms.CharField()
+    city = forms.CharField()
+    state = forms.CharField()
+    zip = forms.IntegerField()
+    user = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Profile
         fields = ('ccnum', 'exp', 'ccv', 'address', 'state', 'zip')
 
+    def __init__(self, user, *args, **kwargs):
+        super(CheckoutForm, self).__init__(*args, **kwargs)
+        print(user)
+        self.fields['user'].queryset = user
+
     def save(self, commit=True):
         data = self.cleaned_data()
         profile = Profile()
-        # find a way to access current user and set profile.user
+        profile.user = data['user']
         profile.cardNumber = data['ccnum']
         profile.expiration = data['exp']
         profile.ccv = data['ccv']

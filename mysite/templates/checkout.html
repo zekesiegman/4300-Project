@@ -44,6 +44,53 @@
     <section class = "py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <h1>Checkout Page</h1>
+            <div class="form">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        Please make sure all fields are filled out correctly!
+                    </div>
+                    {% endif %}
+                    <div class="row align-items-start">
+                        <div class="col justify-content-start">
+                            <div class="mb-3">
+                                <p>Credit Card Number:</p>
+                                {{ form.ccnum }}
+                            </div>
+                            <div class="mb-3">
+                                <p>Expiration Date:</p>
+                                {{ form.exp }}
+                            </div>
+                            <div class="mb-3">
+                                <p>CCV:</p>
+                                {{ form.ccv }}
+                            </div>
+                        </div>
+                        <div class="col justify-content-center">
+                            <div class="mb-3">
+                                <p>Billing Address:</p>
+                                {{ form.address }}
+                            </div>
+                            <div class="mb-3">
+                                <p>City:</p>
+                                {{ form.city }}
+                            </div>
+                            <div class="mb-3">
+                                <p>State:</p>
+                                {{ form.state }}
+                            </div>
+                            <div class="mb-3">
+                                <p>Zip Code:</p>
+                                {{ form.zip }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-field button">
+                        <button type="submit" class="btn btn-success">Checkout Now!</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 </body>
