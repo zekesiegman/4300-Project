@@ -40,7 +40,6 @@
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                     </button>
                 </form>
             </div>
@@ -61,33 +60,36 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ cart.item.name }}</h5>
+                                <h5 class="card-title" style="font-weight: bold;">{{ cart.item.name }}</h5>
                                 <p class="card-text"> $ {{ cart.item.price }}</p>
                                 <p class="card-text"> Storage: {{ cart.item.storage }} Gb</p>
                                 <p class="card-text"> Ram: {{ cart.item.ram }} Gb</p>
                                 <p class="card-text"> Size: {{ cart.item.size }}</p>
                             </div>
                         </div>
-                        <form method="post" class="col" style="display: flex; justify-content: baseline; align-items: center;">
-                            {% csrf_token %}
-                            <button type="submit" class = "btn btn-danger"><i class="bi bi-x-lg" style="padding-right: 6px; margin-left: -2px"></i>Remove</button>
-                            <input type="hidden" name="item" value="{{cart.item.itemId}}">
-                        </form>
+                        <div class="col" style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 10px;">
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class = "btn btn-danger" style="width: 120px"><i class="bi bi-x-lg" style="padding-right: 10px; margin-left: -10px"></i>Remove</button>
+                                <input type="hidden" name="item" value="{{cart.item.itemId}}">
+                            </form>
+                            <a href="{% url 'productView' cart.item.itemId %}" class="btn btn-outline-dark" style="width: 120px">View Product</a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
-            </div><br>
-            {% if matches.count != 0 %}
+
+                {% if matches.count != 0 %}
                 <a href="{% url 'checkout' %}" style="text-decoration: none;">
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-outline-dark flex-shrink-0">
+                    <div class="d-grid gap-2 col-2 mx-auto">
+                        <button class="btn btn-success">
                             Proceed to checkout
                         </button>
                     </div>
                 </a>
             {% endif %}
+            </div><br>
         </div>
-
     </section>
 </body>
 </html>
