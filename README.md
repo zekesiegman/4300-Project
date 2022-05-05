@@ -11,6 +11,7 @@ INSTALLING PROJECT
     - install Django 
     - install django-crispy-forms
     - install django-bootstrap5
+    - install crpytography 
  
  RUNNING PROJECT 
  - on first set up: 
