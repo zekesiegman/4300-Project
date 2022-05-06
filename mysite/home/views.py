@@ -126,26 +126,41 @@ def checkout(request):
             if ccnum is not None and exp is not None and ccv is not None and len(address) != 0 and len(city) != 0 and len(state) != 0 and zip is not None:
                 cardEncrpyted = encrypt(ccnum)
                 fullAddress = address + ', ' + city + ' ' + state + ', ' + zip
-                profile = Profile(user=user, cardNumber=cardEncrpyted, expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
+                # If a profile doesn't exist, create one
+                if len(Profile.objects.filter(user=user)) == 0:
+                    profile = Profile(user=user, cardNumber=cardEncrpyted, expiration=exp, ccv=int(ccv), billingAddress=fullAddress)
+                # If a profile does exist, update all values
+                else:
+                    profile = Profile.objects.get(user=user)
+                    profile.cardNumber = cardEncrpyted
+                    profile.expiration = exp
+                    profile.ccv = int(ccv)
+                    profile.billingAddress = fullAddress
+
                 profile.save()
-                cart = Cart.objects.get(user=request.user)
-                cart.delete()
+                cart = Cart.objects.filter(user=request.user)
+                for item in cart:
+                    item.delete()
+
                 return redirect('orderConfirm')
             else:
                 cartItemsList = Cart.objects.filter(user=user)
                 error = True
                 context = {'matches': cartItemsList, 'error': error}
                 return render(request, '../templates/checkout.html', context)
+                
         return render(request, '../templates/checkout.html', context)
     else:
         return redirect("login")
 
 
 def orderConfirm(request):
+    context = {}
     if request.user.is_authenticated:
         if request.method == 'POST':
             cartItemsList = Cart.objects.filter(user=request.user)
             context = {'matches': cartItemsList}
-            return render(request, '../templates/orderConfirmation.html', context)
+        
+        return render(request, '../templates/orderConfirmation.html', context)
     else:
         return redirect("login")
