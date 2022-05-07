@@ -16,7 +16,11 @@ from cryptography.fernet import Fernet
 
 def index(request):
     phones = Item.objects.all()
-    context = {'phones': phones}
+    if request.user.is_authenticated:
+        cartCount = Cart.objects.filter(user=request.user).count()
+    else:
+        cartCount= 0
+    context = {'phones': phones, 'cartCount': cartCount}
     return render(request, '../templates/index.html', context)
 
 
@@ -145,9 +149,9 @@ def checkout(request):
                     profile.billingAddress = fullAddress
 
                 profile.save()
-                cart = Cart.objects.filter(user=request.user)
-                for item in cart:
-                    item.delete()
+                carts = Cart.objects.filter(user=request.user)
+                for cart in carts:
+                    cart.item.delete()
 
                 return redirect('orderConfirm')
             else:

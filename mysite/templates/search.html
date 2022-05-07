@@ -31,13 +31,13 @@
                         {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">Search</a></li>
                     </ul>
+                    <form class="d-flex" action="{% url 'cart' %}">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart <span class="badge bg-dark">{{ matches.count }}</span>
+                        </button>
+                    </form>
                 {% endblock %}
-                <form class="d-flex" action="{% url 'cart' %}">
-                    <button class="btn btn-outline-dark" type="submit">
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                    </button>
-                </form>
             </div>
         </div>
     </nav>
