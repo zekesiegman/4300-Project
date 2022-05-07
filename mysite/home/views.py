@@ -60,21 +60,30 @@ def forgotpassword(request):
 
 
 def search(request):
-    context = {}
+    if request.user.is_authenticated:
+        cartCount = Cart.objects.filter(user=request.user).count()
+    else:
+        cartCount= 0
+    context = {'cartCount': cartCount}
     if request.method == 'POST':
         searchStr = request.POST.get('search')
         nameMatches = Item.objects.filter(name__icontains=searchStr)
         # can add more search queries and add them to matches with a |
         matches = nameMatches
-        context = {'matches': matches}
+        context = {'matches': matches, 'cartCount': cartCount}
         return render(request, '../templates/search.html', context)
     return render(request, '../templates/search.html', context)
 
 
 def productView(request, id):
+    if request.user.is_authenticated:
+        cartCount = Cart.objects.filter(user=request.user).count()
+    else:
+        cartCount= 0
+    context = {'cartCount': cartCount}
     try:
         phone = Item.objects.get(itemId=id)
-        context = {"phone": phone}
+        context = {"phone": phone, 'cartCount': cartCount}
 
         if request.method == "POST":
             if request.user.is_authenticated:
@@ -166,8 +175,8 @@ def checkout(request):
 
 
 def orderConfirm(request):
-    context = {}
     if request.user.is_authenticated:
+        context = {}
         if request.method == 'POST':
             cartItemsList = Cart.objects.filter(user=request.user)
             context = {'matches': cartItemsList}

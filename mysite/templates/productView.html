@@ -33,7 +33,7 @@
                     <form class="d-flex" action="{% url 'cart' %}">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
-                            Cart <span class="badge bg-dark">{{ matches.count }}</span>
+                            Cart <span class="badge bg-dark">{{ cartCount }}</span>
                         </button>
                     </form>
                     {% endblock %}
