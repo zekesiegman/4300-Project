@@ -43,7 +43,13 @@
 
     <section class = "py-5">
         <div class="container px-4 px-lg-5 mt-5">
-            <h1>Order Confirmation Page</h1>
+            <h1>Order Summary:</h1><br><br>
+            <div class="row">
+                <h6>{{ matches.count }} items being delivered to:</h6><br><br>
+                <p>&emsp;{{ profile.billingAddress }}</p><br><br>
+                <h6>For a total of {{ total }}</h6><br><br>
+                <p>&emsp;Card: {{ ccnum }}, Expires: {{ profile.expiration }}</p>
+            </div>
         </div>
     </section>
 </body>

@@ -130,6 +130,14 @@ def encrypt(cardNum):
     return cardNoEncr
 
 
+def decrpyt(cardNum):
+    key = settings.ENCRYPT_KEY
+    fernet = Fernet(key)
+    card_in_bites = bytes(cardNum, 'utf-8')
+    decoded = fernet.decrypt(card_in_bites).decode()
+    return decoded
+
+
 def checkout(request):
     if request.user.is_authenticated:
         user = request.user
@@ -158,9 +166,6 @@ def checkout(request):
                     profile.billingAddress = fullAddress
 
                 profile.save()
-                carts = Cart.objects.filter(user=request.user)
-                for cart in carts:
-                    cart.item.delete()
 
                 return redirect('orderConfirm')
             else:
@@ -176,10 +181,21 @@ def checkout(request):
 
 def orderConfirm(request):
     if request.user.is_authenticated:
-        context = {}
-        if request.method == 'POST':
-            cartItemsList = Cart.objects.filter(user=request.user)
-            context = {'matches': cartItemsList}
+
+        cartItemsList = Cart.objects.filter(user=request.user)
+        profile = Profile.objects.get(user=request.user)
+        ccEncryted = profile.cardNumber
+        ccDycrypted = decrpyt(ccEncryted)
+
+        totalCost = 0
+        for item in cartItemsList:
+            totalCost += item.item.price
+        tax = totalCost * 0.06
+        finalCost = totalCost + tax
+
+        context = {'matches': cartItemsList, 'profile': profile, 'ccnum': ccDycrypted, 'total': finalCost}
+
+        # remove items from cart here #
         
         return render(request, '../templates/orderConfirmation.html', context)
     else:
