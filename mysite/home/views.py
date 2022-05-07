@@ -87,8 +87,15 @@ def productView(request, id):
 def cart(request):
     if request.user.is_authenticated:
         cartItemsList = Cart.objects.filter(user=request.user).order_by('item_id')
-        context = {'matches': cartItemsList}
+        
+        totalCost = 0
+        for item in cartItemsList:
+            totalCost += item.item.price
+        tax = totalCost * 0.06
+        finalCost = totalCost + tax
 
+        context = {'matches': cartItemsList, 'totalCost': totalCost, 'tax': tax, 'finalCost': finalCost}
+        
         if request.method == "POST":
             removeItem = request.POST.get('item')
             removing = Cart.objects.filter(user=request.user, item=Item.objects.get(itemId=removeItem))
