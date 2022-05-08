@@ -78,15 +78,15 @@
                     </div>
                 </div>
                 {% endfor %}
-                
+
+                {% if matches.count != 0 %}
                 <div style="float: right; text-align: end;">
                     <p>Total Cost: ${{ totalCost|floatformat:2 }}</p>
                     <p>6% Tax: ${{ tax|floatformat:2 }}</p>
                     <hr>
                     <p>Final Cost: ${{ finalCost|floatformat:2 }}</p>
                 </div>
-
-                {% if matches.count != 0 %}
+                
                 <a href="{% url 'checkout' %}" style="text-decoration: none;">
                     <div class="d-grid gap-2 col-2 mx-auto">
                         <button class="btn btn-success">
