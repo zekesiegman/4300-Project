@@ -196,6 +196,8 @@ def orderConfirm(request):
         context = {'matches': cartItemsList, 'profile': profile, 'ccnum': ccDycrypted, 'total': finalCost}
 
         # remove items from cart here #
+        for item in cartItemsList:
+            item.delete()
         
         return render(request, '../templates/orderConfirmation.html', context)
     else:
