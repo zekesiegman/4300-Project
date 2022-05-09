@@ -23,7 +23,7 @@ INSTALLING PROJECT
     - 4: click on localhost link 
  - for running later, only do runserver command (3) 
  - if you make changes to the models page, you need to run 1 and 2 before 3 otherwise changes will not be saved
- - if you want to access the admin page, run the server and add /admin to the url 
+ - if you want to access the admin page (access point for database), run the server and add /admin to the url 
     - username: admin
     - password: admin  
  
