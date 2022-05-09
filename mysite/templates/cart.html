@@ -94,7 +94,12 @@
                         </button>
                     </div>
                 </a>
-            {% endif %}
+                {% else %}
+                <div style="text-align: center;">
+                    <h4>Your cart is empty!</h4>
+                    <a class="btn btn-outline-dark" href="{% url 'index' %}">Click to Browse Selection</a>
+                </div>
+                {% endif %}
             </div><br>
         </div>
     </section>

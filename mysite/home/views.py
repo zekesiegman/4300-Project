@@ -183,6 +183,9 @@ def orderConfirm(request):
     if request.user.is_authenticated:
 
         cartItemsList = Cart.objects.filter(user=request.user)
+        if len(cartItemsList) == 0:
+            return redirect("cart")
+
         profile = Profile.objects.get(user=request.user)
         ccEncryted = profile.cardNumber
         ccDycrypted = decrpyt(ccEncryted)
