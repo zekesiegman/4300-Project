@@ -6,7 +6,8 @@ INSTALLING PROJECT
 - create and enter a new project  
 - go to the toolbar on the top
     - click on vcs
-    - click on get from version control, and put in github url    
+    - click on get from version control, and put in github url 
+           - https://github.com/zekesiegman/4300-Project.git      
 - go to toolbar on the bottom and click python packages
     - install Django 
     - install django-crispy-forms
@@ -26,15 +27,15 @@ INSTALLING PROJECT
     - username: admin
     - password: admin  
  
- GENERAL DJANGO STUFF
- - the home directory contains the backend content 
- - the mysite directory contains the backend structure 
- - the static directory is for images, css, and js 
- - the templates directory if for html 
- - models.py is the database
- - views.py is the backend for each running webpage
- - urls.py contains the urls for each running webpage
-    - if you add a webpage, you need to add the url to home/urls.py and mysite/urls.py
- - forms.py contains the form templates you can use in html and views 
- - if you want to learn more, the django documentation is REALLY good 
-    - also TechWithTim on youtube has a really good playlist for django   
+ GENERAL SITE INFO 
+ - Functionalities include: login/lotout/register, veiwing product information, searching for a product,
+    adding and removing a product to your cart, and checking out by providing payment info
+    - user password and credit card number are both encrypted by the system 
+ - The project was tested on chrome for Windows 10
+ - We used the Django MVC framework with additional libraries of bootstrap 5, crispy-forms, and cryptography
+ - Django does not offer much starter code other than creating the initial files for settings, urls, models, and views
+ - We filled in these starter files with our backend code and added our own HTML pages, everything on the site
+   (other than the built in admin page) is 100% our own work and code 
+ - Folder structure: 
+    - mysite: parent directory 
+        - home:   
