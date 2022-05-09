@@ -28,7 +28,7 @@ INSTALLING PROJECT
     - password: admin  
  
  GENERAL SITE INFO 
- - Functionalities include: login/lotout/register, veiwing product information, searching for a product,
+ - Functionalities include: login/logout/register, veiwing product information, searching for a product,
     adding and removing a product to your cart, and checking out by providing payment info
     - user password and credit card number are both encrypted by the system 
  - The project was tested on chrome for Windows 10
