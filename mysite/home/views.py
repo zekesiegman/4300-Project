@@ -15,6 +15,7 @@ from cryptography.fernet import Fernet
 
 
 def index(request):
+    # Gets all items from database
     phones = Item.objects.all()
     if request.user.is_authenticated:
         cartCount = Cart.objects.filter(user=request.user).count()
@@ -27,10 +28,12 @@ def index(request):
 def registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
+        # If values pass error checking, create user and redirect to home page
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('/')
+        # Show error if form is invalid
         else:
             form = RegisterForm()
             error = True
@@ -60,11 +63,13 @@ def forgotpassword(request):
 
 
 def search(request):
+    # If user is logged in, count cart objects
     if request.user.is_authenticated:
         cartCount = Cart.objects.filter(user=request.user).count()
     else:
         cartCount= 0
     context = {'cartCount': cartCount}
+    # When user searches, get all results that match search
     if request.method == 'POST':
         searchStr = request.POST.get('search')
         nameMatches = Item.objects.filter(name__icontains=searchStr)
@@ -76,15 +81,18 @@ def search(request):
 
 
 def productView(request, id):
+    # If user is logged in, update count
     if request.user.is_authenticated:
         cartCount = Cart.objects.filter(user=request.user).count()
     else:
         cartCount= 0
     context = {'cartCount': cartCount}
+    # Try to get item page, if doesn't exist, redirect to home page
     try:
         phone = Item.objects.get(itemId=id)
         context = {"phone": phone, 'cartCount': cartCount}
 
+        # If user adds item to cart, create cart item and redirect to cart
         if request.method == "POST":
             if request.user.is_authenticated:
                 cartItem = Cart.objects.create(user=request.user, item=phone, copies=1)
@@ -98,9 +106,11 @@ def productView(request, id):
 
 
 def cart(request):
+    # If user is logged in
     if request.user.is_authenticated:
         cartItemsList = Cart.objects.filter(user=request.user).order_by('item_id')
         
+        # Calculate final costs from cart items
         totalCost = 0
         for item in cartItemsList:
             totalCost += item.item.price
@@ -109,6 +119,7 @@ def cart(request):
 
         context = {'matches': cartItemsList, 'totalCost': totalCost, 'tax': tax, 'finalCost': finalCost}
         
+        # If user wants to remove a specific item from cart
         if request.method == "POST":
             removeItem = request.POST.get('item')
             removing = Cart.objects.filter(user=request.user, item=Item.objects.get(itemId=removeItem))
@@ -121,7 +132,7 @@ def cart(request):
     else:
         return redirect("login")
 
-
+# Helper function to encrypt card info
 def encrypt(cardNum):
     key = settings.ENCRYPT_KEY
     fernet = Fernet(key)
@@ -129,7 +140,7 @@ def encrypt(cardNum):
     cardNoEncr = fernet.encrypt(cardEncoded).decode()
     return cardNoEncr
 
-
+# Helper function to decrypt card info
 def decrpyt(cardNum):
     key = settings.ENCRYPT_KEY
     fernet = Fernet(key)
@@ -139,10 +150,12 @@ def decrpyt(cardNum):
 
 
 def checkout(request):
+    # If user is logged in
     if request.user.is_authenticated:
         user = request.user
         cartItemsList = Cart.objects.filter(user=user)
         context = {'matches': cartItemsList,}
+        # If user submits form, create/update profile
         if request.method == 'POST':
             ccnum = request.POST.get('ccnum')
             exp = request.POST.get('exp')
@@ -151,6 +164,7 @@ def checkout(request):
             city = request.POST.get('city')
             state = request.POST.get('state')
             zip = request.POST.get('zip')
+            # If all entered info is valid, update database
             if ccnum is not None and exp is not None and ccv is not None and len(address) != 0 and len(city) != 0 and len(state) != 0 and zip is not None:
                 cardEncrpyted = encrypt(ccnum)
                 fullAddress = address + ', ' + city + ' ' + state + ', ' + zip
@@ -168,6 +182,7 @@ def checkout(request):
                 profile.save()
 
                 return redirect('orderConfirm')
+            # If info is invalid, show error
             else:
                 cartItemsList = Cart.objects.filter(user=user)
                 error = True
@@ -182,14 +197,17 @@ def checkout(request):
 def orderConfirm(request):
     if request.user.is_authenticated:
 
+        # Get users cart. If cart empty, redirect to cart page
         cartItemsList = Cart.objects.filter(user=request.user)
         if len(cartItemsList) == 0:
             return redirect("cart")
 
+        # Get the user and their information
         profile = Profile.objects.get(user=request.user)
         ccEncryted = profile.cardNumber
         ccDycrypted = decrpyt(ccEncryted)
 
+        # Calculate final costs
         totalCost = 0
         for item in cartItemsList:
             totalCost += item.item.price
