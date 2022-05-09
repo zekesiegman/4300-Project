@@ -38,4 +38,10 @@ INSTALLING PROJECT
    (other than the built in admin page) is 100% our own work and code 
  - Folder structure: 
     - mysite: parent directory 
-        - home:   
+        - home: our own backend code
+            - migrations: changes made to database   
+        - mysite: backend code required by django to run the site
+        - static: css, images, and JS
+        - templates: HTML pages 
+        - db.sqlite3: database encoding 
+        - manage.py: master file for starting project    
