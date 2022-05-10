@@ -13,6 +13,7 @@ INSTALLING PROJECT
  
  RUNNING PROJECT 
  - on first set up: 
+    - cd into mysite directory 
     - open IDE terminal
     - run: python manage.py runserver 
     - click on localhost link  
