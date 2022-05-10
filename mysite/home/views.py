@@ -56,6 +56,7 @@ def forgotpassword(request):
             user.set_password(newpassword)
             user.save()
             return redirect('login')
+        # error if user is not found
         except User.DoesNotExist:
             error = True
             return render(request, "../templates/forgotpassword.html", {'error': error})
@@ -132,6 +133,7 @@ def cart(request):
     else:
         return redirect("login")
 
+
 # Helper function to encrypt card info
 def encrypt(cardNum):
     key = settings.ENCRYPT_KEY
@@ -139,6 +141,7 @@ def encrypt(cardNum):
     cardEncoded =cardNum.encode()
     cardNoEncr = fernet.encrypt(cardEncoded).decode()
     return cardNoEncr
+
 
 # Helper function to decrypt card info
 def decrpyt(cardNum):
