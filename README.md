@@ -27,6 +27,10 @@ INSTALLING PROJECT
     - user password and credit card number are both encrypted by the system 
  - The project was tested on chrome for Windows 10
  - We used the Django MVC framework with additional libraries of bootstrap 5 for css styling and cryptography for encrypting card numbers
+    - Django MVC structure: 
+        - model: models.py
+        - views: templates directory contianing html files
+        - control: home directory containing views.py, forms.py, urls.py, admin.py    
  - Django does not offer much starter code other than creating the blank files for settings, urls, models, and views
  - We filled in these starter files with our backend code and added our own HTML pages, everything on the site
    (other than the built in admin page) is 100% our own work and code 
@@ -38,4 +42,5 @@ INSTALLING PROJECT
         - static: css, images, and JS
         - templates: HTML pages 
         - db.sqlite3: database encoding 
-        - manage.py: master file for starting project    
+        - manage.py: master file for starting project   
+ 
