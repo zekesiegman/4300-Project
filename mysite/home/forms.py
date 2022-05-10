@@ -16,13 +16,16 @@ stateChoices = ('Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California','Colora
                 'West Virginia', 'Wisconsin', 'Wyoming')
 
 
+# form for registering new user
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
+    # define input fields and model to use
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+    # function for saving new user
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
@@ -31,6 +34,7 @@ class RegisterForm(UserCreationForm):
         return user
 
 
+# form for card details
 class CheckoutForm(forms.Form):
     ccnum = forms.IntegerField()
     exp = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
@@ -45,11 +49,13 @@ class CheckoutForm(forms.Form):
         model = Profile
         fields = ('ccnum', 'exp', 'ccv', 'address', 'state', 'zip')
 
+    # override default init to pass instance of user
     def __init__(self, user, *args, **kwargs):
         super(CheckoutForm, self).__init__(*args, **kwargs)
         print(user)
         self.fields['user'] = user
 
+    # method to save card info
     def save(self, commit=True):
         data = self.cleaned_data()
         profile = Profile()
