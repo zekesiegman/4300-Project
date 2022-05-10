@@ -1,5 +1,3 @@
-# 4300-Project
-
 INSTALLING PROJECT
 - open IDE and create new project
     - I highly recommend using PyCharm as it is purpose built for python and be the easiest to run the project   
@@ -16,19 +14,23 @@ INSTALLING PROJECT
     - cd into mysite directory 
     - open IDE terminal
     - run: python manage.py runserver 
-    - click on localhost link  
+    - click on localhost link (this is the entry point to the project)  
  - if you want to access the admin page (access point for database), run the server and add /admin to the url 
     - username: admin
     - password: admin  
+
+If you have any problems downloading or running the project or general questions about our project and Django,
+please email me anytime at eas14751@uga.edu and I will be more than happy to help 
+Additionally, written deliverables are contained in our powerpoint
  
  GENERAL SITE INFO 
  - Functionalities include: login/logout/register, veiwing product information, searching for a product,
     adding and removing a product to your cart, and checking out by providing payment info
     - user password and credit card number are both encrypted by the system 
- - The project was tested on chrome for Windows 10
+ - The project was tested on chrome for Windows 10 and MacOS
  - We used the Django MVC framework with additional libraries of bootstrap 5 for css styling and cryptography for encrypting card numbers
     - Django MVC structure: 
-        - model: models.py
+        - model: models.py and db.sqlite3
         - views: templates directory contianing html files
         - control: home directory containing views.py, forms.py, urls.py, admin.py    
  - Django does not offer much starter code other than creating the blank files for settings, urls, models, and views
